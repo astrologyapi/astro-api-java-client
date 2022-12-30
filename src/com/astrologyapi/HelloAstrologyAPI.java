@@ -1,15 +1,15 @@
-package com.vedicrishi;
+package com.astrologyapi;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class HelloVedicRishi {
+public class HelloAstrologyAPI {
 
 	public static void main(String[] args)	throws UnirestException
 	{
-		HttpResponse<JsonNode> response = Unirest.post("https://api.vedicrishiastro.com/v1/astro_details")
+		HttpResponse<JsonNode> response = Unirest.post("https://json.astrologyapi.com/v1/astro_details")
 				.basicAuth("5622", "90678603bba2e4b988ec2fdeba8bf524")
 				.field("day", "28")
 				.field("month", "12")
