@@ -1,0 +1,2734 @@
+{
+	"info": {
+		"_postman_id": "6dca64cd-950b-49ba-8d30-9c0e5baeff77",
+		"name": "Western Astrology API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "34857870-6dca64cd-950b-49ba-8d30-9c0e5baeff77"
+	},
+	"item": [
+		{
+			"name": "western_chart_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "13c5af5f-28f6-4f82-93c9-15075b4cff6e",
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the structure of the response schema\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('sun_sign');\r",
+							"    pm.expect(responseData).to.have.property('horoscope');\r",
+							"    pm.expect(responseData).to.have.property('date');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is within an acceptable range\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"pm.test(\"Successful response is received\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Planet Name</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Normalized Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.planets}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "1a59ccff-239c-49a5-9b82-f60f30f241ec",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "9465d42116df5136a3d25e04278d3e19d8045cd8",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "day",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "month",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "1964",
+							"type": "text"
+						},
+						{
+							"key": "hour",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "min",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "18.63",
+							"type": "text"
+						},
+						{
+							"key": "lon",
+							"value": "77.43",
+							"type": "text"
+						},
+						{
+							"key": "tzone",
+							"value": "5.5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/western_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"western_horoscope"
+					]
+				},
+				"description": "The `POST` request to `/v1/western_horoscope` endpoint is used to retrieve the western horoscope information. The request payload is sent in `x-www-form-urlencoded` format.\n\n### Response\n\nThe response of this request is a JSON schema, which defines the structure of the JSON response that will be received upon making the request to retrieve the western horoscope information."
+			},
+			"response": []
+		},
+		{
+			"name": "western chart IMAGE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c6a9b657-fc96-4ce6-adea-7bff05b4c872",
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('date_of_birth');\r",
+							"    pm.expect(responseData).to.have.property('time_of_birth');\r",
+							"    pm.expect(responseData).to.have.property('latitude');\r",
+							"    pm.expect(responseData).to.have.property('longitude');\r",
+							"    pm.expect(responseData).to.have.property('timezone');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has a valid JSON format\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate the structure of the response\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('sun_sign');\r",
+							"    pm.expect(responseData).to.have.property('moon_sign');\r",
+							"    pm.expect(responseData).to.have.property('rising_sign');\r",
+							"    pm.expect(responseData).to.have.property('ascendant');\r",
+							"    pm.expect(responseData).to.have.property('houses');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Status</th>\r",
+							"        <th>Chart URL</th>\r",
+							"        <th>Message</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.status}}</td>\r",
+							"        <td>{{response.chart_url}}</td>\r",
+							"        <td>{{response.msg}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "6e6f58a3-5022-4185-b49a-3338299da1d5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "9465d42116df5136a3d25e04278d3e19d8045cd8",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "day",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "month",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "1964",
+							"type": "text"
+						},
+						{
+							"key": "hour",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "min",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "18.63",
+							"type": "text"
+						},
+						{
+							"key": "lon",
+							"value": "77.43",
+							"type": "text"
+						},
+						{
+							"key": "tzone",
+							"value": "5.5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/natal_wheel_chart",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"natal_wheel_chart"
+					]
+				},
+				"description": "\n### Create Natal Wheel Chart\n\nThis API endpoint allows you to create a natal wheel chart by sending a POST request to the specified URL.\n\n#### Request Body\n- The request should be sent in the `x-www-form-urlencoded` format.\n\n#### Response\nThe response of this request is a JSON schema representing the structure of the natal wheel chart data.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "lunar_metrics",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "84ce2fba-81b0-4990-89f5-a7b4d35c6e4b",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Month</th>\r",
+							"        <th>Within Perigee Range</th>\r",
+							"        <th>Distance</th>\r",
+							"        <th>Within Apogee Range</th>\r",
+							"        <th>Apogee Distance</th>\r",
+							"        <th>Moon Sign</th>\r",
+							"        <th>Moon Phase</th>\r",
+							"        <th>Moon Age (Days)</th>\r",
+							"        <th>Moon Day</th>\r",
+							"        <th>Moon Illumination</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.month}}</td>\r",
+							"        <td>{{response.within_perigee_range}}</td>\r",
+							"        <td>{{response.distance}}</td>\r",
+							"        <td>{{response.within_apogee_range}}</td>\r",
+							"        <td>{{response.apogee_distance}}</td>\r",
+							"        <td>{{response.moon_sign}}</td>\r",
+							"        <td>{{response.moon_phase}}</td>\r",
+							"        <td>{{response.moon_age_in_days}}</td>\r",
+							"        <td>{{response.moon_day}}</td>\r",
+							"        <td>{{response.moon_illumination}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "91bfd49f-907e-476d-9149-2445a476e8a2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "day",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "month",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "1964",
+							"type": "text"
+						},
+						{
+							"key": "hour",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "min",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "18.63",
+							"type": "text"
+						},
+						{
+							"key": "lon",
+							"value": "77.43",
+							"type": "text"
+						},
+						{
+							"key": "tzone",
+							"value": "5.5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/lunar_metrics",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"lunar_metrics"
+					]
+				},
+				"description": "\n### Lunar Metrics API\n\nThis API endpoint allows you to retrieve lunar metrics based on the provided date, time, and location.\n\n#### Request Parameters\n- `day` (text): The day for which lunar metrics are to be retrieved.\n- `month` (text): The month for which lunar metrics are to be retrieved.\n- `year` (text): The year for which lunar metrics are to be retrieved.\n- `hour` (text): The hour for which lunar metrics are to be retrieved.\n- `min` (text): The minute for which lunar metrics are to be retrieved.\n- `lat` (text): The latitude of the location for which lunar metrics are to be retrieved.\n- `lon` (text): The longitude of the location for which lunar metrics are to be retrieved.\n- `tzone` (text): The time zone of the location for which lunar metrics are to be retrieved.\n\n#### Response\nThe response of this request is a JSON schema representing the lunar metrics data.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "composite horoscope",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1ddc3e6f-60af-4f18-987c-b70096a82b8d",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First Name</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Normalized Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.first}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "6ef01053-a2b5-42d6-b554-5e262445f378",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "orb",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/synastry_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"synastry_horoscope"
+					]
+				},
+				"description": "\nThis endpoint allows you to make an HTTP POST request to https://json.astrologyapi.com/v1/synastry_horoscope in order to retrieve synastry horoscope data. The request payload uses the x-www-form-urlencoded body type.\n\n### Response\nThe response for this request can be documented as a JSON schema.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "synastry_horoscope",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f2f7fb15-d894-4c3b-a805-3cf01a33ae21",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Norm Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.first}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "a485ed76-ca28-4435-9299-d9b6eeb21a09",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "orb",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/synastry_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"synastry_horoscope"
+					]
+				},
+				"description": "\n### Synastry Horoscope\n\nThis API endpoint is used to retrieve the response for synastry horoscope.\n\n#### Request Body\n- The request should be sent as an HTTP POST to the specified URL.\n- The request body should be of type x-www-form-urlencoded.\n\n#### Response\nThe response for this request is a JSON schema, detailing the structure and data types of the response fields.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "tropical_transits_timing/monthly",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae933df1-41c8-4886-88d5-8ec321c4cae8",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First Name</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Normalized Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.first}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Second Name</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Normalized Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.second}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>House Name</th>\r",
+							"        <th>Synastry House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.synastry.house_1}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{synastry_house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>House Name</th>\r",
+							"        <th>Synastry House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.synastry.house_2}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{synastry_house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First</th>\r",
+							"        <th>Second</th>\r",
+							"        <th>Type</th>\r",
+							"        <th>Orb</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.synastry.aspects}}\r",
+							"        <tr>\r",
+							"            <td>{{first}}</td>\r",
+							"            <td>{{second}}</td>\r",
+							"            <td>{{type}}</td>\r",
+							"            <td>{{orb}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "da3dec6b-fdf6-4e41-b88a-87679f69c24b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "orb",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/synastry_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"synastry_horoscope"
+					]
+				},
+				"description": "\n### Synastry Horoscope\n\nThis API endpoint is used to retrieve the synastry horoscope.\n\n#### Request Body\n- This request uses x-www-form-urlencoded request body type.\n\n#### Response\nThe response of this request is a JSON schema.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "tropical_transits_timing/daily",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1817bcef-c3c1-43be-b3af-1f0e6248c903",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First - Name</th>\r",
+							"        <th>First - Full Degree</th>\r",
+							"        <th>Second - Name</th>\r",
+							"        <th>Second - Full Degree</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    <tr>\r",
+							"        <td>{{response.first.[0].name}}</td>\r",
+							"        <td>{{response.first.[0].full_degree}}</td>\r",
+							"        <td>{{response.second.[0].name}}</td>\r",
+							"        <td>{{response.second.[0].full_degree}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "f60c485f-3be2-4812-9852-17d5432cd386",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "orb",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/synastry_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"synastry_horoscope"
+					]
+				},
+				"description": "\n### Synastry Horoscope\n\nThis endpoint allows you to retrieve the synastry horoscope by making an HTTP POST request to the specified URL.\n\n#### Request Body\n- The request should be of type x-www-form-urlencoded.\n- There are no specific parameters provided in the request body.\n\n#### Response\nThe response for this request is a JSON schema describing the structure of the synastry horoscope data.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "general_ascendant_report/tropical",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5d39de2b-b71b-482b-b499-58e3497c9869",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First Name</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Normalized Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.first}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "b8d43899-bf62-4230-af27-64b6ec95fd9e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "orb",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/synastry_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"synastry_horoscope"
+					]
+				},
+				"description": "\nThe `POST` request to `/v1/synastry_horoscope` endpoint is used to fetch the response for synastry horoscope. The request body should be of `x-www-form-urlencoded` type. The response of this request can be documented as a JSON schema.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "general_sign_report/tropical/sun",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae286286-5f91-48e5-8a87-8b8465cf4a91",
+						"exec": [
+							"var template = `\r",
+							"<canvas id=\"synastryChart\" height=\"75\"></canvas>\r",
+							"\r",
+							"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script> \r",
+							"\r",
+							"<script>\r",
+							"    var ctx = document.getElementById(\"synastryChart\");\r",
+							"\r",
+							"    var synastryChart = new Chart(ctx, {\r",
+							"        type: \"line\",\r",
+							"        data: {\r",
+							"            labels: [\"First\", \"Second\"],\r",
+							"            datasets: [{\r",
+							"                label: 'Synastry House 1',\r",
+							"                data: [],\r",
+							"                fill: false,\r",
+							"                borderColor: \"#003f5c\"\r",
+							"            },{\r",
+							"                label: 'Synastry House 2',\r",
+							"                data: [],\r",
+							"                fill: false,\r",
+							"                borderColor: \"#58508d\"\r",
+							"            }]\r",
+							"        },\r",
+							"        options: {\r",
+							"            title: {\r",
+							"                display: true,\r",
+							"                text: 'Synastry Comparison'\r",
+							"            },\r",
+							"            scales: {\r",
+							"                yAxes: [{\r",
+							"                    ticks: {\r",
+							"                        beginAtZero: true\r",
+							"                    }\r",
+							"                }]\r",
+							"            }\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    // Access the data passed to pm.visualizer.set() from the JavaScript\r",
+							"    // code of the Visualizer template\r",
+							"    pm.getData(function (err, value) {\r",
+							"        synastryChart.data.datasets[0].data = value.response.synastry.house_1.map((item) => item.synastry_house);\r",
+							"        synastryChart.data.datasets[1].data = value.response.synastry.house_2.map((item) => item.synastry_house);\r",
+							"        synastryChart.update();\r",
+							"    });\r",
+							"\r",
+							"</script>`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    var res = pm.response.json();\r",
+							"\r",
+							"    var visualizerData = {\r",
+							"        synastry: {\r",
+							"            house_1: res.synastry.house_1,\r",
+							"            house_2: res.synastry.house_2\r",
+							"        }\r",
+							"    };\r",
+							"\r",
+							"    return {response: visualizerData};\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "49d7106b-7573-4827-ab2b-79584a0f8965",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "orb",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/synastry_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"synastry_horoscope"
+					]
+				},
+				"description": "\n### Synastry Horoscope\n\nThis API endpoint is used to retrieve the synastry horoscope. The request should be sent as an HTTP POST to the specified URL.\n\n#### Request Body\n- The request should be sent with the `x-www-form-urlencoded` body type.\n- There are no specific parameters required in the request body for this endpoint.\n\n#### Response\nThe response for this request is a JSON object representing the synastry horoscope. Below is a JSON schema representing the structure of the response:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"key1\": {\n      \"type\": \"string\"\n    },\n    \"key2\": {\n      \"type\": \"number\"\n    },\n    ...\n  }\n}\n```\nReplace `key1`, `key2`, etc. with the actual keys and their respective data types as per the response.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "general_house_report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "253c50d2-ed66-4579-bc49-37e355f88bb2",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First Name</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Normalized Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.first}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Second Name</th>\r",
+							"        <th>Full Degree</th>\r",
+							"        <th>Normalized Degree</th>\r",
+							"        <th>Speed</th>\r",
+							"        <th>Is Retro</th>\r",
+							"        <th>Sign ID</th>\r",
+							"        <th>Sign</th>\r",
+							"        <th>House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.second}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{full_degree}}</td>\r",
+							"            <td>{{norm_degree}}</td>\r",
+							"            <td>{{speed}}</td>\r",
+							"            <td>{{is_retro}}</td>\r",
+							"            <td>{{sign_id}}</td>\r",
+							"            <td>{{sign}}</td>\r",
+							"            <td>{{house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First Name</th>\r",
+							"        <th>Synastry House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.synastry.house_1}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{synastry_house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Second Name</th>\r",
+							"        <th>Synastry House</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.synastry.house_2}}\r",
+							"        <tr>\r",
+							"            <td>{{name}}</td>\r",
+							"            <td>{{synastry_house}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>First</th>\r",
+							"        <th>Second</th>\r",
+							"        <th>Type</th>\r",
+							"        <th>Orb</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.synastry.aspects}}\r",
+							"        <tr>\r",
+							"            <td>{{first}}</td>\r",
+							"            <td>{{second}}</td>\r",
+							"            <td>{{type}}</td>\r",
+							"            <td>{{orb}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "73e939d0-3c3c-4cbd-ac61-21cb06a7ffc5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "orb",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/synastry_horoscope",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"synastry_horoscope"
+					]
+				},
+				"description": "\n### Synastry Horoscope\n\nThis endpoint makes an HTTP POST request to retrieve the synastry horoscope. The request should be sent to https://json.astrologyapi.com/v1/synastry_horoscope.\n\n#### Response\nThe response for this request follows a JSON schema. The schema for the response can be documented as follows:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    // Add properties and their types based on the actual response\n  }\n}\n```\n"
+			},
+			"response": []
+		},
+		{
+			"name": "personality_report/tropical",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ab2d4cd-b483-4231-974b-a4bfa54337a3",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Report</th>\r",
+							"        <th>Spiritual Lesson</th>\r",
+							"        <th>Key Quality</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.report}}</td>\r",
+							"        <td>{{response.spiritual_lesson}}</td>\r",
+							"        <td>{{response.key_quality}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "fbfa75f5-ab9e-4297-ac2e-8de45cbc0749",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "day",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "month",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "1964",
+							"type": "text"
+						},
+						{
+							"key": "hour",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "min",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "18.63",
+							"type": "text"
+						},
+						{
+							"key": "lon",
+							"value": "77.43",
+							"type": "text"
+						},
+						{
+							"key": "tzone",
+							"value": "5.5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/personality_report/tropical",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"personality_report",
+						"tropical"
+					]
+				},
+				"description": "\n### Personality Report - Generate Tropical\n\nThis API endpoint is used to generate a personality report based on the tropical astrology system.\n\n#### Request Body Parameters\n- `day` (text): The day of the birthdate.\n- `month` (text): The month of the birthdate.\n- `year` (text): The year of the birthdate.\n- `hour` (text): The hour of the birth time.\n- `min` (text): The minute of the birth time.\n- `lat` (text): The latitude of the birth location.\n- `lon` (text): The longitude of the birth location.\n- `tzone` (text): The time zone of the birth location.\n\n#### Response\nThe response of this request is a JSON schema representing the personality report data.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "romantic_personality_report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69ae4445-9498-492c-97e4-61257153c823",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Report</th>\r",
+							"    </tr>\r",
+							"    \r",
+							"    {{#each response.report}}\r",
+							"        <tr>\r",
+							"            <td>{{this}}</td>\r",
+							"        </tr>\r",
+							"    {{/each}}\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "7a725b89-c8ce-4d0c-b5ed-d85a3ba83c14",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "day",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "month",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "year",
+							"value": "1964",
+							"type": "text"
+						},
+						{
+							"key": "hour",
+							"value": "12",
+							"type": "text"
+						},
+						{
+							"key": "min",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "lat",
+							"value": "18.63",
+							"type": "text"
+						},
+						{
+							"key": "lon",
+							"value": "77.43",
+							"type": "text"
+						},
+						{
+							"key": "tzone",
+							"value": "5.5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/romantic_personality_report/tropical",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"romantic_personality_report",
+						"tropical"
+					]
+				},
+				"description": "\n### Romantic Personality Report (Tropical)\n\nThis API endpoint allows you to generate a romantic personality report based on the provided birth details in the tropical zodiac system.\n\n#### Request Body\n- `day` (text): The day of the birth date.\n- `month` (text): The month of the birth date.\n- `year` (text): The year of the birth date.\n- `hour` (text): The hour of the birth time.\n- `min` (text): The minute of the birth time.\n- `lat` (text): The latitude of the birth location.\n- `lon` (text): The longitude of the birth location.\n- `tzone` (text): The time zone of the birth location.\n\n#### Response\nThe response of this request is a JSON object conforming to the following schema:\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"report_id\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n```\nThe response contains a `report_id` which is a unique identifier for the generated report, and a `message` providing information about the success of the report generation.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "zodiac_compatibility/:zodiacName/:partnerZodiacName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "553badc2-b9e0-4444-998d-23d4759b0f4f",
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Your Sign</th>\r",
+							"        <th>Partner's Sign</th>\r",
+							"        <th>Compatibility Report</th>\r",
+							"        <th>Compatibility Percentage</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.your_sign}}</td>\r",
+							"        <td>{{response.your_partner_sign}}</td>\r",
+							"        <td>{{response.compatibility_report}}</td>\r",
+							"        <td>{{response.compatibility_percentage}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "d0eeaa94-07f2-4c23-92fa-c65f3ae7b0f0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/zodiac_compatibility/virgo/pisces",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"zodiac_compatibility",
+						"virgo",
+						"pisces"
+					]
+				},
+				"description": "\n### Zodiac Compatibility - Virgo and Pisces\n\nThis API endpoint makes an HTTP POST request to retrieve the zodiac compatibility between Virgo and Pisces.\n\n#### Request Body\n- The request body is of type x-www-form-urlencoded.\n\n#### Response\nThe response of this request is a JSON schema that describes the structure of the response data.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "compatibility/:sunSign/:risingSign/:partnerSunSign/:partnerRisingSign",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7e2d0cab-2991-4b30-9a47-c8d3c86f53f3",
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is in an acceptable range\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body has the required fields for compatibility data\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.leo).to.exist.and.to.be.an('object');\r",
+							"  pm.expect(responseData.aries).to.exist.and.to.be.an('object');\r",
+							"  pm.expect(responseData.cancer).to.exist.and.to.be.an('object');\r",
+							"  pm.expect(responseData.virgo).to.exist.and.to.be.an('object');\r",
+							"});\r",
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Compatibility Report</th>\r",
+							"        <th>Compatibility Percentage</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.compatibility_report}}</td>\r",
+							"        <td>{{response.compatibility_percentage}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return { response: pm.response.json() }\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Response time is lower than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "4844bb70-7a49-4efd-ad3d-1ab22dcddea9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "p_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "p_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "p_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "p_hour",
+							"value": "11",
+							"type": "text"
+						},
+						{
+							"key": "p_min",
+							"value": "55",
+							"type": "text"
+						},
+						{
+							"key": "p_lat",
+							"value": "19.20",
+							"type": "text"
+						},
+						{
+							"key": "p_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "p_tzone",
+							"value": "5.5",
+							"type": "text"
+						},
+						{
+							"key": "s_day",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "s_month",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "s_year",
+							"value": "1990",
+							"type": "text"
+						},
+						{
+							"key": "s_hour",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "s_min",
+							"value": "22",
+							"type": "text"
+						},
+						{
+							"key": "s_lat",
+							"value": "19.33",
+							"type": "text"
+						},
+						{
+							"key": "s_lon",
+							"value": "25.20",
+							"type": "text"
+						},
+						{
+							"key": "s_tzone",
+							"value": "5.5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/compatibility/leo/aries/cancer/virgo",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"compatibility",
+						"leo",
+						"aries",
+						"cancer",
+						"virgo"
+					]
+				},
+				"description": "\nThis endpoint makes an HTTP POST request to retrieve compatibility information between four zodiac signs - Leo, Aries, Cancer, and Virgo. The request payload is of type x-www-form-urlencoded, but no specific parameters were provided.\n\n### Response\nThe response of this request is a JSON schema describing the compatibility information between the specified zodiac signs.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Tarot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "326f4b8c-3d15-4583-8754-38e8eeaa5a47",
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"The response should be a valid JSON object\", function () {",
+							"    pm.expect(pm.response.json()).to.be.an('object');",
+							"    pm.expect(pm.response.json()).to.not.be.empty;",
+							"});",
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>Love</th>",
+							"        <th>Career</th>",
+							"        <th>Finance</th>",
+							"    </tr>",
+							"    <tr>",
+							"        <td>{{response.love}}</td>",
+							"        <td>{{response.career}}</td>",
+							"        <td>{{response.finance}}</td>",
+							"    </tr>",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "d3fc2d0a-9fea-4918-9447-f201507afe35",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "66927cdcbdc2baba10bb83cace81417d4d59444a",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "630520",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "day",
+							"value": "15",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "month",
+							"value": "10",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "year",
+							"value": "1964",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hour",
+							"value": "12",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "min",
+							"value": "50",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "lat",
+							"value": "18.63",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "lon",
+							"value": "77.45",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "tzone",
+							"value": "5.5",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "love",
+							"value": "57",
+							"type": "text"
+						},
+						{
+							"key": "career",
+							"value": "32",
+							"type": "text"
+						},
+						{
+							"key": "finance",
+							"value": "54",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://json.astrologyapi.com/v1/tarot_predictions",
+					"protocol": "https",
+					"host": [
+						"json",
+						"astrologyapi",
+						"com"
+					],
+					"path": [
+						"v1",
+						"tarot_predictions"
+					]
+				},
+				"description": "\n### Tarot Predictions\n\nThis endpoint allows you to make predictions based on tarot cards for different aspects of life.\n\n#### Request Body\n- `love` (text): Description of the love aspect for which the prediction is requested.\n- `career` (text): Description of the career aspect for which the prediction is requested.\n- `finance` (text): Description of the finance aspect for which the prediction is requested.\n\n#### Response\nThe response for this request follows the JSON schema below:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"prediction\": {\n      \"type\": \"string\"\n    },\n    \"card_image\": {\n      \"type\": \"string\"\n    }\n  }\n}\n```\n"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "api_key",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "user_id",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "9a2e584f-fd17-4ae5-acca-50220fcc98dc"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "9f1f77eb-3733-445b-9643-17688b5cf54c"
+			}
+		}
+	]
+}
